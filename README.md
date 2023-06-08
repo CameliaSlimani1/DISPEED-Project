@@ -22,5 +22,6 @@ platforms ;
 heterogeneous computing elements and memory capabilities
 of a single drone.
 
+![alt text](https://github.com/CameliaSlimani1/DISPEED_Project_demo/blob/main/docs/img/overview.png)
 
 ## Repository Structure
