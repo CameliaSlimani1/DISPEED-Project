@@ -12,16 +12,13 @@ according to mission criticality level and traffic load and the
 energy and resource (computation and memory) usage of the
 ran IDS. For this sake, the project was subdivided into 3
 steps:
-
-  1- Forming an exploration space of IDS models ; 
-
-  2- Implementing, optimizing and characterizing them on multiple
-platforms ;
-
-  3- Proposing online strategies of IDS mapping on
+Markup : 1. Forming an exploration space of IDS models ; 
+         2. Implementing, optimizing and characterizing them on multiple platforms ;
+         3. Proposing online strategies of IDS mapping on
 heterogeneous computing elements and memory capabilities
 of a single drone.
 
 ![alt text](https://github.com/CameliaSlimani1/DISPEED_Project_demo/blob/main/docs/img/overview.png)
 
 ## Repository Structure
+
