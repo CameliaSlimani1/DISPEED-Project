@@ -1,0 +1,1 @@
+{"model": "AE-CNN", "platforme": "GPU Xavier", "characterization_volume": 8000, "accuracy": 75.45, "f1_score": 77.65, "inference_time": 92036, "peak_memory": 36201008, "model_size": 2.9, "energy": 1350, "description": "Auto-encoder to 25 + CNN"}

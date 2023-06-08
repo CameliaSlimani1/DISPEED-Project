@@ -1,0 +1,1 @@
+{"model": "NoFS-RF", "platforme": "GPU Xavier", "characterization_volume": 8000, "accuracy": 81.59, "f1_score": 82.83, "inference_time": 374, "peak_memory": 36201008, "model_size": 28, "energy": 197, "description": "No Feature Selection + RF"}

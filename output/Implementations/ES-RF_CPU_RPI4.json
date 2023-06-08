@@ -1,0 +1,1 @@
+{"model": "ES-RF", "platforme": "CPU RPI4", "characterization_volume": 8000, "accuracy": 77.28, "f1_score": 79.5, "inference_time": 2240, "peak_memory": 10.9, "model_size": 9.1, "energy": 5.99, "description": "Expert Feature Select + RF"}

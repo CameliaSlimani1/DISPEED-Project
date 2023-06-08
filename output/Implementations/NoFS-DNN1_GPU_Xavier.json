@@ -1,0 +1,1 @@
+{"model": "NoFS-DNN1", "platforme": "GPU Xavier", "characterization_volume": 8000, "accuracy": 76.5, "f1_score": 78.64, "inference_time": 16668, "peak_memory": 33899.28, "model_size": 0.144, "energy": 217, "description": "NoFS-DNN1"}

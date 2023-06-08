@@ -1,0 +1,1 @@
+{"model": "AE-RF", "platforme": "GPU Xavier", "characterization_volume": 8000, "accuracy": 75.26, "f1_score": 77.73, "inference_time": 21686, "peak_memory": 35443, "model_size": 32.9, "energy": 484, "description": "Auto-Encoder to 25 + RF"}

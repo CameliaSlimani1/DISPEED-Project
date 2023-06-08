@@ -1,0 +1,1 @@
+{"model": "ES-CNN", "platforme": "GPU Xavier", "characterization_volume": 8000, "accuracy": 74.09, "f1_score": 78.03, "inference_time": 72818, "peak_memory": 34488, "model_size": 2.6, "energy": 850.17, "description": "Expert Selection  + CNN"}

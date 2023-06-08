@@ -1,0 +1,1 @@
+{"model": "NoFS-DNN1", "platforme": "CPU RPI4", "characterization_volume": 8000, "accuracy": 76.5, "f1_score": 78.64, "inference_time": 2327, "peak_memory": 67.77, "model_size": 0.144, "energy": 47.5, "description": "NoFS-DNN1"}

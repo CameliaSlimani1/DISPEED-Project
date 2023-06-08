@@ -1,0 +1,1 @@
+{"model": "ES-CNN", "platforme": "CPU RPI4", "characterization_volume": 8000, "accuracy": 74.09, "f1_score": 78.03, "inference_time": 217974, "peak_memory": 46.95, "model_size": 2.6, "energy": 765, "description": "Expert Selection + CNN"}

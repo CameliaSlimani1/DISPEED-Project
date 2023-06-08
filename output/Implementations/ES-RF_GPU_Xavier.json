@@ -1,0 +1,1 @@
+{"model": "ES-RF", "platforme": "GPU Xavier", "characterization_volume": 8000, "accuracy": 77.28, "f1_score": 79.5, "inference_time": 235, "peak_memory": 34.28, "model_size": 5.5, "energy": 484, "description": "Expert Features  + RF"}

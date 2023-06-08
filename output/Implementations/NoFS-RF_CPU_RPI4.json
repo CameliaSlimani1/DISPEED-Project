@@ -1,0 +1,1 @@
+{"model": "NoFS-RF", "platforme": "CPU RPI4", "characterization_volume": 8000, "accuracy": 81.59, "f1_score": 82.83, "inference_time": 3379, "peak_memory": 33.62, "model_size": 15.4, "energy": 5.99, "description": "No Feature Selection + RF"}
