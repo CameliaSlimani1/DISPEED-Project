@@ -1,9 +1,9 @@
-from Implementation import Implementation
-from Platform import Platforme
-from IDSModel import IDSModel
-from Dataset import Dataset
-from AutoEncoder import AutoEncoders
-from reports_generations import *
+from entities.Implementation import Implementation
+from entities.Platform import Platforme
+from entities.IDSModel import IDSModel
+from entities.Dataset import Dataset
+from entities.AutoEncoder import AutoEncoders
+from utils.reports_generations import *
 import pandas as pd
 
 """model = IDSModel("ES-DNN1", "DNN", None)
