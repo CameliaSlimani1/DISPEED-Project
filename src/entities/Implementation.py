@@ -1,7 +1,7 @@
 import json
 import os
-from IDSModel import IDSModel
-from Platform import Platforme
+from .Platform import Platforme
+from .IDSModel import  IDSModel
 
 class Implementation:
 
