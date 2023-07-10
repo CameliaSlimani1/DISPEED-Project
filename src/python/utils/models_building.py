@@ -1,6 +1,6 @@
 import tensorflow as tf
 from sklearn.ensemble import RandomForestClassifier
-
+from src.utils.reports_generations import *
 
 
 def build_and_train_rf(x_train, y_train, structure)  :
@@ -30,5 +30,12 @@ def build_and_train_nn(x_train, y_train, x_test, y_test, structure, metrics, los
         else:
             print("Unsupported layer")
     model.compile(loss=loss, optimizer=tf.optimizers.Adam(), metrics=metrics)
-    model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs, validation_data=(x_test, y_test))
+    history = model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs, validation_data=(x_test, y_test))
+    val_loss = history.history['val_loss']
+    train_loss = history.history['loss']
+    epochs = range(1,epochs+1, 1)
+    print(epochs)
+    print(val_loss)
+    print(train_loss)
+    plotLosses(train_loss, val_loss, epochs, "epoch", "Loss", "b", "r", 0)
     return model
