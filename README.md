@@ -22,9 +22,11 @@ of a single drone.
 
 ## Repository Structure
 This repository contains the following elements : 
-1. [src]( https://github.com/CameliaSlimani1/DISPEED_Project_demo/tree/main/src "src") : it contains the code to generate IDSs, describe Platforms and Implementations, and generate reports. The entities and utility codes are described hereafter : 
-   * [entities](https://github.com/CameliaSlimani1/DISPEED_Project_demo/tree/main/src/entities) : it containes the code for abstract entities related to the project (IDSmodel, platform, implementation, dataset, etc.). 
-   * [utils](https://github.com/CameliaSlimani1/DISPEED_Project_demo/tree/main/src/utils) : this directory contanins utility codes to generate IDS models (RF, CNN, DNN) and performance reports. 
+1. [src]( https://github.com/CameliaSlimani1/DISPEED_Project_demo/tree/main/src "src") : it contains the code to generate IDSs, describe Platforms and Implementations, and generate reports. The entities and utility codes are described hereafter :
+   * [cpp](https://github.com/CameliaSlimani1/DISPEED_Project_demo/tree/main/src/cpp): this repository containes the c++ codes to perform inferencer on the target platforms.
+   * [python](https://github.com/CameliaSlimani1/DISPEED_Project_demo/tree/main/src/python): it contains the python codes that allow us to build our IDS models and report their performances. 
+        * [entities](https://github.com/CameliaSlimani1/DISPEED_Project_demo/tree/main/src/entities) : it containes the code for abstract entities related to the project (IDSmodel, platform, implementation, dataset, etc.). 
+        * [utils](https://github.com/CameliaSlimani1/DISPEED_Project_demo/tree/main/src/utils) : this directory contanins utility codes to generate IDS models (RF, CNN, DNN) and performance reports. 
 3. [output](https://github.com/CameliaSlimani1/DISPEED_Project_demo/tree/main/output "output") : it constains the output data generated from the project : 
    * [Platforms](https://github.com/CameliaSlimani1/DISPEED_Project_demo/tree/main/output/Platforms) : this directory contains JSON files of the platforms used in the characterization process ; 
    * [Implementations](https://github.com/CameliaSlimani1/DISPEED_Project_demo/tree/main/output/Implementations) : it containes JSON files of the charaterization of the IDS models on platforms. The JSON files include : the model characterized, the used platform, the volume of data on which the charecterization was run, model's accuracy, model's F1-score, inference time in milliseconds, memory peak in Megabytes, energy consumed in Joules, and a short textual description of the model. 
