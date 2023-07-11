@@ -31,9 +31,9 @@ class IDSModel():
     # Serializes a model
     def save_ids_model(self, ):
         if self.type == 'RF':
-            joblib.dump(self.model, f"../output/models/{self.type}/{self.name}")
+            joblib.dump(self.model, f"../../output/models/{self.type}/{self.name}")
         elif self.type == 'CNN' or self.type == 'DNN':
-            self.model.save(f"../output/models/{self.type}/{self.name}.h5")
+            self.model.save(f"../../output/models/{self.type}/{self.name}.h5")
 
 
 
@@ -62,14 +62,14 @@ class IDSModel():
 
             converter.representative_dataset = representative_dataset_generator
         tflite_model = converter.convert()
-        with open(f"../output/models/{self.type}/{self.name}.tflite", "wb") as f:
+        with open(f"../../output/models/{self.type}/{self.name}.tflite", "wb") as f:
             f.write(tflite_model)
 
 
     def generate_rf_for_gpu(self):
         model = convert(self.model, 'pytorch')
         model.to('cuda')
-        model.save(f"../output/models/RF/{self.name}_gpu")
+        model.save(f"../../output/models/RF/{self.name}_gpu")
 
 
     #TODO : generate RF for CPU
