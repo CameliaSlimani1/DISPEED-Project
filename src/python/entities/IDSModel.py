@@ -2,7 +2,7 @@ import joblib
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.models import load_model, save_model
-from src.utils.models_building import *
+from src.python.utils.models_building import *
 from sklearn.metrics import accuracy_score, f1_score
 from hummingbird.ml import convert, load
 

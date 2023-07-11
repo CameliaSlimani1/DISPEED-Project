@@ -1,6 +1,6 @@
 import tensorflow as tf
 from sklearn.ensemble import RandomForestClassifier
-from src.utils.reports_generations import *
+from src.python.utils.reports_generations import *
 
 
 def build_and_train_rf(x_train, y_train, structure)  :
