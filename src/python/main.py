@@ -8,7 +8,8 @@ import pandas as pd
 
 unsw = Dataset("C:\\Users\\slimanca\\Downloads\\archive\\UNSW_NB15_training-set.csv", [], "C:\\Users\\slimanca\\Downloads\\archive\\UNSW_NB15_testing-set.csv", features_select=False)
 x_train, x_test, y_train, y_test = unsw.preprocess(attack_label='label', attack_type_label='attack_cat', columns_to_encode=['proto', 'state', 'service'], oversample=True, binarize_y=True)
-
+unsw.write_test_data("unsw_ES")
+"""
 structure = {
     'layers': [
         {'type': 'dense','params': {'units': 128 , 'kernel_initializer': 'glorot_uniform', 'activation': "relu"}},
@@ -32,3 +33,4 @@ model.save_ids_model()
 acc, f1_score = model.get_security_metrics(x_test, y_test)
 model.generate_tflite_model(x_test, opt=False)
 impl1 = Implementation(model, None, 8000, acc, f1_score, None,  None, None, None, None)
+"""

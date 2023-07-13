@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.preprocessing import LabelEncoder, LabelBinarizer, MinMaxScaler
 from sklearn.model_selection import train_test_split
 from imblearn.over_sampling import SMOTE
-
+import csv
 
 class Dataset:
 
@@ -79,3 +79,6 @@ class Dataset:
             self.y_test = lb.transform(self.y_test)
         return self.x_train, self.x_test, self.y_train, self.y_test
 
+    def write_test_data(self, filename):
+        np.savetxt(f"../../output/test_data/x_test_%s.csv" % filename, self.x_test, delimiter=",")
+        np.savetxt(f"../../output/test_data/y_test_%s.csv" % filename, np.argmax(self.y_test, axis=1), delimiter=",")
