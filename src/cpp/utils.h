@@ -6,7 +6,7 @@ void get_y_test (float * y_test, const char * path, int NB_INFER){
     
     std::ifstream src; 
     
-    src.open("ytest_misc.csv"); 
+    src.open(path);
     if (!src)
     {
     	std::cerr << "\a error reading y test data\n"; 
