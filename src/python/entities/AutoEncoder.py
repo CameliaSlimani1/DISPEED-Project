@@ -27,7 +27,7 @@ class AutoEncoders(tf.keras.Model):
                 ]
             )
         else:
-            self.encoder = load_model('../output/models/Autoencoders/autoencoder_25.h5')
+            self.encoder = load_model('../../output/models/Autoencoders/autoencoder_25.h5')
 
     def call(self, inputs, **kwargs):
         encoded = self.encoder(inputs)

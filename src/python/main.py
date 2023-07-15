@@ -10,7 +10,7 @@ import pandas as pd
 unsw = Dataset("C:\\Users\\slimanca\\Downloads\\archive\\UNSW_NB15_training-set.csv", [], "C:\\Users\\slimanca\\Downloads\\archive\\UNSW_NB15_testing-set.csv", features_select=False)
 x_train, x_test, y_train, y_test = unsw.preprocess(attack_label='label', attack_type_label='attack_cat', columns_to_encode=['proto', 'state', 'service'], oversample=True, binarize_y=True)
 #'proto', 'state', 'service'
-unsw.write_test_data("unsw_NoFS")
+unsw.write_test_data("unsw_AE")
 """
 structure = {
     'layers': [
