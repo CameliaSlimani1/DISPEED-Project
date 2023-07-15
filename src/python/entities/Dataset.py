@@ -56,7 +56,7 @@ class Dataset:
         self.data = pd.get_dummies(self.data, prefix=self.columns_to_encode, columns=self.columns_to_encode)
 
         # Split data into train and test data
-        self.x_train, self.x_test, self.y_train, self.y_test = train_test_split(self.data, y, random_state=123, test_size=0.3)
+        self.x_train, self.x_test, self.y_train, self.y_test = train_test_split(self.data, y, random_state=123, test_size=0.33)
 
         # Oversample data if oversample argument = True
         if oversample:
