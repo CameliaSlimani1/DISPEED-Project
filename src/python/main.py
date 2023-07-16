@@ -7,8 +7,8 @@ from utils.reports_generations import *
 import pandas as pd
 
 #1,6,7,8,9,10,11,12,13,27,28,32,33,34,35,36,43,44
-unsw = Dataset("C:\\Users\\slimanca\\Downloads\\archive\\UNSW_NB15_training-set.csv", [1,6,7,8,9,10,11,12,13,27,28,32,33,34,35,36,43,44], "C:\\Users\\slimanca\\Downloads\\archive\\UNSW_NB15_testing-set.csv", features_select=True)
-x_train, x_test, y_train, y_test = unsw.preprocess(attack_label='label', attack_type_label='attack_cat', columns_to_encode=[], oversample=True, binarize_y=True)
+unsw = Dataset("C:\\Users\\slimanca\\Downloads\\archive\\UNSW_NB15_training-set.csv", [], "C:\\Users\\slimanca\\Downloads\\archive\\UNSW_NB15_testing-set.csv", features_select=False)
+x_train, x_test, y_train, y_test = unsw.preprocess(attack_label='label', attack_type_label='attack_cat', columns_to_encode=['proto', 'state', 'service'], oversample=True, binarize_y=True)
 #'proto', 'state', 'service'
 #unsw.write_test_data("unsw_AE")
 structure = {
@@ -23,7 +23,7 @@ structure = {
 }
 
 
-model = IDSModel("ES-DNN2", "DNN", structure)
+model = IDSModel("NoFS-DNN2", "DNN", structure)
 
 
 model.create_model(x_train=x_train, y_train=y_train, x_test=x_test, y_test=y_test)
