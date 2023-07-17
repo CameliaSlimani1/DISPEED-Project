@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.preprocessing import LabelEncoder, LabelBinarizer, MinMaxScaler
 from sklearn.model_selection import train_test_split
 from imblearn.over_sampling import SMOTE
-
+from src.python.entities.IDSModel import *
 
 class Dataset:
 
@@ -77,6 +77,11 @@ class Dataset:
             lb.fit(y)
             self.y_train = lb.transform(self.y_train)
             self.y_test = lb.transform(self.y_test)
+
+        ae = IDSModel("ae", "DNN", None)
+        ae.load_ids_model("C:\\Users\slimanca\OneDrive\Documents\GitHub\DISPEED_demo\output\models\Autoencoders\autoencoder_25.h5")
+        self.x_train = ae.predict(self.x_train)
+        self.x_test = ae.predict(self.x_test)
 
         return self.x_train, self.x_test, self.y_train, self.y_test
 

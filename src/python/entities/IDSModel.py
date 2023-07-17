@@ -19,7 +19,7 @@ class IDSModel():
         if self.type == 'RF' :
             self.model = build_and_train_rf(x_train, y_train, self.structure)
         elif self.type == 'DNN' or self.type == 'CNN':
-            self.model = build_and_train_nn(x_train, y_train, x_test, y_test, self.structure, ['categorical_accuracy'], 'categorical_crossentropy', 32, 10)
+            self.model = build_and_train_nn(x_train, y_train, x_test, y_test, self.structure, ['categorical_accuracy'], 'categorical_crossentropy', 32, 50)
 
     # Loads an already serialized model
     def load_ids_model(self, filepath):
