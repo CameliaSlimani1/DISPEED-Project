@@ -4,7 +4,8 @@ from sklearn.preprocessing import LabelEncoder, LabelBinarizer, MinMaxScaler
 from sklearn.model_selection import train_test_split
 from imblearn.over_sampling import SMOTE
 from src.python.entities.IDSModel import *
-
+from src.python.entities.AutoEncoder import *
+import csv
 class Dataset:
 
 
@@ -78,13 +79,18 @@ class Dataset:
             self.y_train = lb.transform(self.y_train)
             self.y_test = lb.transform(self.y_test)
 
-        ae = IDSModel("ae", "DNN", None)
-        ae.load_ids_model("C:\\Users\slimanca\OneDrive\Documents\GitHub\DISPEED_demo\output\models\Autoencoders\autoencoder_25.h5")
-        self.x_train = ae.predict(self.x_train)
-        self.x_test = ae.predict(self.x_test)
+        #ae = AutoEncoders(197,25, False)
+
+        #self.x_train = ae.encoder.predict(self.x_train)
+        #self.x_test = ae.encoder.predict(self.x_test)
 
         return self.x_train, self.x_test, self.y_train, self.y_test
 
     def write_test_data(self, filename):
-        np.savetxt(f"../../output/test_data/x_test_%s.csv" % filename, self.x_test, delimiter=",")
-        np.savetxt(f"../../output/test_data/y_test_%s.csv" % filename, np.argmax(self.y_test, axis=1), delimiter=",")
+        df = pd.DataFrame(self.x_test)
+        #np.savetxt(f"../../output/test_data/x_test_%s.csv" % filename, self.x_test, delimiter=",")
+        df.to_csv(f"../../output/test_data/x_test_%s.csv" % filename, header=False, index=False)
+        df2 = pd.DataFrame(np.argmax(self.y_test, axis=1))
+        df2.to_csv(f"../../output/test_data/y_test_%s.csv" % filename, header=False, index=False)
+
+        #np.savetxt(f"../../output/test_data/y_test_%s.csv" % filename, np.argmax(self.y_test, axis=1), delimiter=",")
