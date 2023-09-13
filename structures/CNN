@@ -1,0 +1,20 @@
+structure = {
+    'layers': [
+        {'type': 'conv1d','params': {'filters': 64 ,'kernel_size' : 3, 'activation': "relu",'padding' :'same'}},
+        {'type': 'conv1d','params': {'filters': 64 , 'kernel_size' : 3, 'activation': "relu",'padding' :'same'}},
+        {'type': 'maxpool1d','params': {'pool_size': 2}},
+        {'type': 'conv1d','params': {'filters': 128 , 'kernel_size' : 3, 'activation': "relu",'padding':'same'}},
+        {'type': 'conv1d','params': {'filters': 128 , 'kernel_size' : 3, 'activation': "relu",'padding':'same'}},
+        {'type': 'conv1d','params': {'filters': 128 , 'kernel_size' : 3, 'activation': "relu",'padding':'same'}},
+        {'type': 'maxpool1d','params': {'pool_size': 2}},
+        {'type': 'conv1d','params': {'filters': 256 , 'kernel_size' : 3, 'activation': "relu",'padding':'same'}},
+        {'type': 'conv1d','params': {'filters': 256 , 'kernel_size' : 3, 'activation': "relu",'padding':'same'}},
+        {'type': 'conv1d','params': {'filters': 256 , 'kernel_size' : 3, 'activation': "relu",'padding':'same'}},
+        {'type': 'maxpool1d','params': {'pool_size': 2}},
+        {'type': 'flatten', 'params': {}},
+        {'type': 'dense', 'params': {'units': 100, 'kernel_initializer': 'glorot_uniform', 'activation': "relu"}},
+        {'type': 'dropout', 'params': {'rate': 0.5}},
+        {'type': 'dense', 'params': {'units': 20, 'kernel_initializer': 'glorot_uniform', 'activation': "relu"}},
+        {'type': 'dense', 'params': {'units': 10, 'kernel_initializer': 'glorot_uniform', 'activation': "softmax"}},
+    ]
+}
