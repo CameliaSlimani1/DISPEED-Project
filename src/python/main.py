@@ -7,13 +7,27 @@ from utils.reports_generations import *
 import pandas as pd
 
 #1,6,7,8,9,10,11,12,13,27,28,32,33,34,35,36,43,44
-unsw = Dataset("C:\\Users\\slimanca\\Downloads\\archive\\UNSW_NB15_training-set.csv", [1,6,7,8,9,10,11,12,13,27,28,32,33,34,35,36,43,44], "C:\\Users\\slimanca\\Downloads\\archive\\UNSW_NB15_testing-set.csv", features_select=True)
-x_train, x_test, y_train, y_test = unsw.preprocess(attack_label='label', attack_type_label='attack_cat', columns_to_encode=[], oversample=True, binarize_y=True)
+unsw = Dataset("C:\\Users\\slimanca\\Downloads\\archive\\UNSW_NB15_training-set.csv", [], "C:\\Users\\slimanca\\Downloads\\archive\\UNSW_NB15_testing-set.csv", features_select=False)
+x_train, x_test, y_train, y_test = unsw.preprocess(attack_label='label', attack_type_label='attack_cat', columns_to_encode=['proto', 'state', 'service'], oversample=True, binarize_y=True)
+structure = {
+    'layers': [
+        {'type': 'dense','params': {'units': 1024 , 'kernel_initializer': 'glorot_uniform', 'activation': "relu"}},
+        {'type': 'dense', 'params': {'units': 704, 'kernel_initializer': 'glorot_uniform', 'activation': "relu"}},
+        {'type': 'dense', 'params': {'units': 288, 'kernel_initializer': 'glorot_uniform', 'activation': "relu"}},
+        {'type': 'dense', 'params': {'units': 64, 'kernel_initializer': 'glorot_uniform', 'activation': "relu"}},
+        {'type': 'dense', 'params': {'units': 10, 'kernel_initializer': 'glorot_uniform', 'activation': "softmax"}},
 
-ids = IDSModel("dnn", "DNN", None)
-ids.explore_dnn_models(x_train, y_train, x_test, y_test, None, None)
+    ]
+}
 
+ids = IDSModel("dnn", "DNN", structure)
+ids.create_model(x_train, y_train, x_test, y_test)
+ids.get_security_metrics(x_test, y_test)
+unsw.write_test_data("x_test_unsw_AE")
+#ids.explore_dnn_models(x_train, y_train, x_test, y_test, None, None)
+#ids.load_ids_model("../../models/CNN/ES-")
 #unsw.write_test_data("unsw_ES")
+
 """model = IDSModel("NoFS-DNN2", "DNN", None)
 model.load_ids_model("../../output/models/DNN/NoFS-DNN2.h5")
 acc, f1 = model.get_security_metrics(unsw.x_test, unsw.y_test)

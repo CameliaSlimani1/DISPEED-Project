@@ -79,10 +79,10 @@ class Dataset:
             self.y_train = lb.transform(self.y_train)
             self.y_test = lb.transform(self.y_test)
 
-        #ae = AutoEncoders(197,25, False)
+        ae = AutoEncoders(197,25, False)
 
-        #self.x_train = ae.encoder.predict(self.x_train)
-        #self.x_test = ae.encoder.predict(self.x_test)
+        self.x_train = ae.encoder.predict(self.x_train)
+        self.x_test = ae.encoder.predict(self.x_test)
 
         return self.x_train, self.x_test, self.y_train, self.y_test
 
