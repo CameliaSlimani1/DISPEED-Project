@@ -10,6 +10,7 @@ from src.python.utils.optimize import *
 from sklearn.metrics import accuracy_score, f1_score
 from hummingbird.ml import convert, load
 from sklearn.model_selection import ParameterGrid
+import keras_tuner
 
 class IDSModel():
 
@@ -70,7 +71,56 @@ class IDSModel():
 
 
     # DNN exploration
-    
+
+
+
+    def explore_dnn_models (self, x_train, y_train, x_test, y_test, x_val, y_val):
+        def generate_dnn_model(hp):
+            model = tf.keras.Sequential()
+            for i in range(hp.Int("num_fc", 5, 8)):
+                model.add(tf.keras.layers.Dense(
+                    # Tune number of units separately.
+                    units=hp.Int(f"units_{i}", min_value=256, max_value=1024, step=64),
+                    kernel_initializer='glorot_uniform',
+                    activation=hp.Choice(f"activation_{i}", ["relu"]),
+                ))
+
+            model.add(tf.keras.layers.Dense(10, activation='softmax', name='output'))
+            model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+            return model
+        hpmodel = generate_dnn_model(keras_tuner.HyperParameters())
+        dnn_tuner=keras_tuner.BayesianOptimization(generate_dnn_model,
+            objective="accuracy",
+            max_trials=50,
+            executions_per_trial=1,
+            directory="../tmp",
+            project_name="dispeed"
+        )
+        dnn_tuner.search_space_summary()
+        dnn_tuner.search(x_train, y_train, validation_data=(x_test, y_test), batch_size=32, epochs=10, verbose=1)
+        models = dnn_tuner.get_best_models(50)
+        exploration_results = {"model_summary": [], "accuracy": [], "size" : [] }
+        for i in range (50):
+            model = models[i]
+            y_predict = np.argmax(model.predict(x_test))
+            acc = accuracy_score(y_test, y_predict)
+            size = model.count_params()
+            exploration_results["model_summary"].append(model.summary())
+            exploration_results["accuracy"].append(acc)
+            exploration_results["size"].append(size)
+
+        plotPareto(exploration_results["accuracy"], np.array(exploration_results["size"]), "Accuracy", "Size (MB)",
+                   "bo")
+        pareto, count = findParetoFront(exploration_results)
+        print(pareto)
+        print(count)
+        plotPareto_2(exploration_results["accuracy"], pareto["accuracy"], np.array(exploration_results["size"]),
+                     np.array(pareto["size"]), "Accuracy", "Size (MB)", "bo", "ro", "Solutions", "Pareto Solutions")
+
+        return exploration_results
+
+
     # Creates a new model
     def create_model(self, x_train, y_train, x_test, y_test):
         if self.type == 'RF' :
