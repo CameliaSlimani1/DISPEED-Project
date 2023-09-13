@@ -1,3 +1,8 @@
+"""
+Created on Fri Mar 17 18:27:54 2023
+
+@author: morgerlo
+"""
 import pandas as pd
 import  matplotlib.pyplot as plt
 import numpy as np
