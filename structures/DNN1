@@ -1,0 +1,10 @@
+structure = {
+    'layers': [
+        {'type': 'dense','params': {'units': 128 , 'kernel_initializer': 'glorot_uniform', 'activation': "relu"}},
+        {'type': 'dropout', 'params': {'rate': 0.5}},
+        {'type': 'dense', 'params': {'units': 64, 'kernel_initializer': 'glorot_uniform', 'activation': "relu"}},
+        {'type': 'dense', 'params': {'units': 32, 'kernel_initializer': 'glorot_uniform', 'activation': "relu"}},
+        {'type': 'dense', 'params': {'units': 10, 'kernel_initializer': 'glorot_uniform', 'activation': "softmax"}},
+
+    ]
+}
