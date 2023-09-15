@@ -8,8 +8,11 @@ from utils.energy_analysis import *
 import pandas as pd
 
 #1,6,7,8,9,10,11,12,13,27,28,32,33,34,35,36,43,44
-"""unsw = Dataset("C:\\Users\\slimanca\\Downloads\\archive\\UNSW_NB15_training-set.csv", [], "C:\\Users\\slimanca\\Downloads\\archive\\UNSW_NB15_testing-set.csv", features_select=False)
-x_train, x_test, y_train, y_test = unsw.preprocess(attack_label='label', attack_type_label='attack_cat', columns_to_encode=['proto', 'state', 'service'], oversample=True, binarize_y=True)
+"""unsw = Dataset("C:\\Users\\slimanca\\Downloads\\archive\\UNSW_NB15_training-set.csv", [1,6,7,8,9,10,11,12,13,27,28,32,33,34,35,36,43,44], "C:\\Users\\slimanca\\Downloads\\archive\\UNSW_NB15_testing-set.csv", features_select=True)
+x_train, x_test, y_train, y_test = unsw.preprocess(attack_label='label', attack_type_label='attack_cat', columns_to_encode=[], oversample=True, binarize_y=True)
+es_cnn = IDSModel("ES-CNN", "CNN", None)
+es_cnn.load_ids_model("../../output/models/CNN/ES-CNN.h5")
+es_cnn.generate_tflite_model(x_test, False)
 structure = {
     'layers': [
         {'type': 'conv1d','params': {'filters': 64 ,'kernel_size' : 3, 'activation': "relu",'padding' :'same'}},
@@ -74,4 +77,4 @@ acc, f1_score = model.get_security_metrics(x_test, y_test)
 model.generate_tflite_model(x_test, opt=False)
 impl1 = Implementation(model, None, 80000, acc, f1_score, None,  None, None, None, None)
 """
-read_and_plot_energy_from_file("../../output/energy_measures/dnn2_es_cpu_xavier.csv")
+read_and_plot_energy_from_file("../../output/energy_measures/ae_dnn2_dla.csv")

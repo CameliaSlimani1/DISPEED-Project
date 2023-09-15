@@ -1,0 +1,4 @@
+src/tmp
+src/python/entities/__pycache__
+src/python/utils/__pycache__/*
+output/test_data/*
