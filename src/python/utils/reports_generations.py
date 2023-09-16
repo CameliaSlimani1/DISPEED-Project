@@ -1,5 +1,6 @@
 """ Generation of reports """
 import matplotlib.pyplot as plt
+import pandas as pd
 from matplotlib import cm
 
 def plotPareto (x, y, x_label, y_label, color, rotation=0):
@@ -46,3 +47,7 @@ def plot3D(x, y, z1, z2):
     plt.show()
 
 
+def analyze_reports (filename):
+    df = pd.read_csv(filename, sep=";")
+    print(df.head())
+    df.plot()

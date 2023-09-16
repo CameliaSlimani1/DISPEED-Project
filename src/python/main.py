@@ -72,9 +72,9 @@ model.create_model(x_train=x_train, y_train=y_train, x_test=x_test, y_test=y_tes
 
 
 model.save_ids_model()
-#model.load_ids_model('../output/models/DNN/ES-DNN1.h5')
+#model.load_ids_model('../output/models/DNN/ES-DNN1.h5')80
 acc, f1_score = model.get_security_metrics(x_test, y_test)
 model.generate_tflite_model(x_test, opt=False)
 impl1 = Implementation(model, None, 80000, acc, f1_score, None,  None, None, None, None)
 """
-read_and_plot_energy_from_file("../../output/energy_measures/ae_dnn2_dla.csv")
+read_and_plot_energy_from_file("../../output/energy_measures/es_cnn_cpu_xavier.csv")
