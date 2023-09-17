@@ -77,4 +77,4 @@ acc, f1_score = model.get_security_metrics(x_test, y_test)
 model.generate_tflite_model(x_test, opt=False)
 impl1 = Implementation(model, None, 80000, acc, f1_score, None,  None, None, None, None)
 """
-read_and_plot_energy_from_file("../../output/energy_measures/es_cnn_cpu_xavier.csv")
+read_and_plot_energy_from_file("../../output/energy_measures/nofs_dnn1_gpu_b512.csv")

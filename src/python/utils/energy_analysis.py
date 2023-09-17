@@ -36,9 +36,10 @@ def read_and_plot_energy_from_file(path):
     index = max(trigger_index, start_index)
 
     print(thrld)
-    #index =
-    while current[index] > thrld:  #
-    #while index < 225: #
+    #index = 45
+    #index=10
+    #while current[index] > thrld:  #
+    while index < 78: #
 
         select[index] = 1
         index += 1
