@@ -38,8 +38,8 @@ def read_and_plot_energy_from_file(path):
     print(thrld)
     #index = 45
     #index=10
-    #while current[index] > thrld:  #
-    while index < 78: #
+    while current[index] > thrld:  #
+    #while index < 78: #
 
         select[index] = 1
         index += 1

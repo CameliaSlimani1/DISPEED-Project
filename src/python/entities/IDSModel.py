@@ -24,7 +24,7 @@ class IDSModel():
 
     def explore_rf_models (self, x_train, y_train, x_test, y_test, x_val, y_val):
         params = { 'n_estimators': [5, 10, 25, 50, 75, 100],
-                       'max_depth': [5, 10, 25 , 50, 75, 100, 125, 150, 200]}
+                       'max_depth': [5, 10, 25 , 50, 75, 100]}
 
         param_grid = ParameterGrid(params)
         acc = 0
@@ -52,8 +52,13 @@ class IDSModel():
                 best_acc = best_acc
                 best_config = config
         #plot3D(exploration_results["n_estimators"],exploration_results["max_depth"], exploration_results["accuracy"], np.array(exploration_results["size"]))
-        plotPareto(exploration_results["accuracy"], np.array(exploration_results["size"]),"Accuracy", "Size (MB)", "bo")
         pareto, count =  findParetoFront(exploration_results)
+        with open("../../output/explorations/%s_explorations.json"%(self.name), "w") as file:
+            json.dump(exploration_results, file)
+        with open(f"../../output/explorations/%s_pareto.json"%(self.name), "w") as file:
+            json.dump(pareto, file)
+        plotPareto(exploration_results["accuracy"], np.array(exploration_results["size"]), "Accuracy", "Size (MB)",
+                   "bo")
         print(pareto)
         print(count)
         plotPareto_2(exploration_results["accuracy"],  pareto["accuracy"], np.array(exploration_results["size"]), np.array(pareto["size"]),"Accuracy", "Size (MB)", "bo", "ro", "Solutions", "Pareto Solutions")
@@ -64,10 +69,7 @@ class IDSModel():
         print(best_config)
 
 
-        with open(f"../../output/explorations/nofs_rf_explorations.json", "w") as file:
-            json.dump(exploration_results, file)
-        with open(f"../../output/explorations/nofs_rf_pareto.json", "w") as file:
-            json.dump(pareto, file)
+
 
 
     # DNN exploration
