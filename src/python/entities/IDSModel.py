@@ -136,6 +136,8 @@ class IDSModel():
             self.model = joblib.load(filepath)
         elif self.type == 'CNN' or self.type == 'DNN':
             self.model = load_model(filepath)
+            print("here")
+            print(self.model.summary())
 
     # Serializes a model
     def save_ids_model(self, ):
