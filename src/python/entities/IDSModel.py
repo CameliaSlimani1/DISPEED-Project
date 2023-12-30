@@ -11,7 +11,7 @@ from sklearn.metrics import accuracy_score, f1_score
 from hummingbird.ml import convert, load
 from sklearn.model_selection import ParameterGrid
 import keras_tuner
-
+import emlearn
 class IDSModel():
 
     def __init__(self, name, type, structure):
@@ -184,6 +184,56 @@ class IDSModel():
 
 
     #TODO : generate RF for CPU
+
+    def generate_rf_for_cpu(self, X_train, X_test):
+        out_dir = f"../../output/models/RF"
+        cmodel_filename = f"{out_dir}/{self.name}_model.h"
+        cmodel = emlearn.convert(self.model)
+        code  = cmodel.save(file=cmodel_filename, name='model')
+        test_pred = self.model.predict(X_test)
+        # Generate a test dataet
+        test_data = numpy.array(X_test).flatten()
+        test_res = numpy.array(test_pred).flatten()
+
+        test_dataset = "\n".join([
+            emlearn.cgen.array_declare(f"{self.name}_testset_data", dtype='float', values=test_data),
+            emlearn.cgen.array_declare(f"{self.name}_testset_results", dtype='int', values=test_res),
+            emlearn.cgen.constant_declare(f'{self.name}_testset_features', val=len(X_train[0])),
+            emlearn.cgen.constant_declare(f'{self.name}_testset_samples', val=len(X_test)),
+        ])
+        test_code = f'''
+        #include "{cmodel_filename}" // emlearn generated model
+    
+        #include <stdio.h> // printf
+    
+        int
+        {self.name}_test() {{
+         const int n_features = {self.name}_testset_features;
+         const int n_testcases = {self.name}_testset_samples;   
+            int errors = 0;
+    
+            for (int i=0; i<n_testcases; i++) {{
+                const float *features = {self.name}_testset_data + (i*n_features);
+                const int expect_result = {self.name}_testset_results[i*1];
+    
+                const int32_t out = model_predict(features, n_features);
+    
+                if (out != expect_result) {{
+                    printf(\"test-fail sample=%d expect=%d got=%d \\n\", i, expect_result, out);
+                    errors += 1;
+                }}
+    
+            }}
+            return errors;
+        }}
+    
+        int
+        main(int argc, const char *argv[])
+        {{
+            const int errors = {self.name}_test();
+            return errors;
+        }}'''
+
 
 
 
