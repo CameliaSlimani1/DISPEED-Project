@@ -17,57 +17,19 @@ def get_ct_dst_sport_ltm(trafic_df):
     connections according to the last time
     (26)"""
     trafic_df['ct_src_sport_ltm'] = None 
+    trafic_df['ct_dst_src_ltm'] = None 
+    trafic_df['ct_src_dport_ltm'] = None 
+    trafic_df['ct_dst_ltm'] = None
+    
     for line in trafic_df.itertuples(index=True, name='Pandas'):
         subset =pd.DataFrame(trafic_df.iloc[line.Index-100:line.Index])
         subset.columns = trafic_df.columns
         matchinglines = subset[(subset['Sport'] == line.Sport) & (subset['DstAddr'] == line.DstAddr)]
         trafic_df.loc[line.Index, 'ct_src_sport_ltm']=matchinglines.shape[0]
-    return  trafic_df
-
-def get_ct_dst_src_ltm(trafic_df):
-    """No of connections of the same source (1)
-    and the destination (3) address in in 100
-    connections according to the last time
-    (26)."""
-    trafic_df['ct_dst_src_ltm'] = None 
-    for line in trafic_df.itertuples(index=True, name='Pandas'):
-        subset =pd.DataFrame(trafic_df.iloc[line.Index-100:line.Index])
-        subset.columns = trafic_df.columns
         matchinglines = subset[(subset['SrcAddr'] == line.SrcAddr) & (subset['DstAddr'] == line.DstAddr)]
         trafic_df.loc[line.Index, 'ct_dst_src_ltm']=matchinglines.shape[0]
-    return  trafic_df
-
-def get_ct_src_dport_ltm(trafic_df):
-    """No of connections of the same source
-    address (1) and the destination port (4) in
-    100 connections according to the last time
-    (26)."""
-    trafic_df['ct_src_dport_ltm'] = None 
-    for line in trafic_df.itertuples(index=True, name='Pandas'):
-        subset =pd.DataFrame(trafic_df.iloc[line.Index-100:line.Index])
-        subset.columns = trafic_df.columns
-        matchinglines = subset[(subset['SrcAddr'] == line.SrcAddr) &  (subset['Dport'] == line.Dport)]
-        trafic_df.loc[line.Index, 'ct_src_dport_ltm']=matchinglines.shape[0]
-    return  trafic_df
-
-def get_ct_dst_ltm(trafic_df): 
-    """No. of connections of the same
-    destination address (3) in 100 connections
-    according to the last time (26)."""
-    trafic_df['ct_dst_ltm'] = None
-    for line in trafic_df.itertuples(index=True, name='Pandas'):
-        subset =pd.DataFrame(trafic_df.iloc[line.Index-100:line.Index])
-        subset.columns = trafic_df.columns
         matchinglines = subset[subset['DstAddr'] == line.DstAddr]
         trafic_df.loc[line.Index, 'ct_dst_ltm']=matchinglines.shape[0]
-    return trafic_df
-
-def get_ct_state_ttl(trafic_df):
-    """No. for each state (6) according to
-    specific range of values for
-    source/destination time to live (10) (11)."""
-    trafic_df['ct_state_ttl'] = None
-    for line in trafic_df.itertuples(index=True, name='Pandas'):
         if ((line.sTtl == 62 or line.sTtl == 63 or line.sTtl == 254 or line.sTtl == 255) and (line.dTtl == 252 or line.dTtl == 253) and line.State == 'FIN'  ):
             trafic_df.loc[line.Index, 'ct_state_ttl'] = '1'
         else:
@@ -87,8 +49,9 @@ def get_ct_state_ttl(trafic_df):
                                 trafic_df.loc[line.Index, 'ct_state_ttl'] = '6'
                             else:
                                 trafic_df.loc[line.Index, 'ct_state_ttl'] = '0'
-    
-    return trafic_df
+    return  trafic_df
+
+
                                    
 def main():
     pcap_filename = 'datasets/unsw-nb15-pcap-files/2.pcap' # pcap file to be analyzed
@@ -103,17 +66,13 @@ def main():
     os.system(produce_argus_ra_output)
     output_filename = 'output/ArgusFiles/argus_output_features.csv'
     trafic_df = get_argus_output(argus_ra_output_filename)
-    get_ct_dst_ltm(trafic_df)
     get_ct_dst_sport_ltm(trafic_df)
-    get_ct_dst_src_ltm(trafic_df)
-    get_ct_src_dport_ltm(trafic_df)
     
-    get_ct_state_ttl(trafic_df)
-    
+    end_time = time.time()
     trafic_df = trafic_df.drop(['SrcAddr', 'DstAddr', 'Sport', 'Dport', 'State', 'LastTime'], axis=1)
    
     trafic_df.to_csv(output_filename, index=False, sep='\t')
-    end_time = time.time()
+    
     print('Time taken to extract features from pcap file: ', end_time - start_time)
 
 if __name__ == '__main__' :
