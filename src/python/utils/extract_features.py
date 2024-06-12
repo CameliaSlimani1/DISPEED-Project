@@ -7,6 +7,7 @@ import os
 
 def get_argus_output(filename): 
     trafic_df = pd.read_csv(filename, delimiter='[ ]+', engine='python')
+    trafic_df = trafic_df.sort_values(by='LastTime')
     return trafic_df 
 
 
@@ -16,11 +17,11 @@ def get_ct_dst_sport_ltm(trafic_df):
     connections according to the last time
     (26)"""
     trafic_df['ct_src_sport_ltm'] = None 
-    for line in trafic_df.itertuples(index=True, name='Pandas'): 
-        lastTime = line.LastTime
-        matchinglines = trafic_df[(trafic_df['LastTime'] <= lastTime) & (trafic_df['Sport'] == line.Sport) & (trafic_df['DstAddr'] == line.DstAddr)].tail(100) 
+    for line in trafic_df.itertuples(index=True, name='Pandas'):
+        subset =pd.DataFrame(trafic_df.iloc[line.Index-100:line.Index])
+        subset.columns = trafic_df.columns
+        matchinglines = subset[(subset['Sport'] == line.Sport) & (subset['DstAddr'] == line.DstAddr)]
         trafic_df.loc[line.Index, 'ct_src_sport_ltm']=matchinglines.shape[0]
-
     return  trafic_df
 
 def get_ct_dst_src_ltm(trafic_df):
@@ -29,12 +30,11 @@ def get_ct_dst_src_ltm(trafic_df):
     connections according to the last time
     (26)."""
     trafic_df['ct_dst_src_ltm'] = None 
-    for line in trafic_df.itertuples(index=True, name='Pandas'): 
-        #get the 100 connections as compared to last time
-        lastTime = line.LastTime
-        matchinglines = trafic_df[(trafic_df['LastTime'] <= lastTime) & (trafic_df['SrcAddr'] == line.SrcAddr) & (trafic_df['DstAddr'] == line.DstAddr)].tail(100) 
+    for line in trafic_df.itertuples(index=True, name='Pandas'):
+        subset =pd.DataFrame(trafic_df.iloc[line.Index-100:line.Index])
+        subset.columns = trafic_df.columns
+        matchinglines = subset[(subset['SrcAddr'] == line.SrcAddr) & (subset['DstAddr'] == line.DstAddr)]
         trafic_df.loc[line.Index, 'ct_dst_src_ltm']=matchinglines.shape[0]
-
     return  trafic_df
 
 def get_ct_src_dport_ltm(trafic_df):
@@ -43,9 +43,10 @@ def get_ct_src_dport_ltm(trafic_df):
     100 connections according to the last time
     (26)."""
     trafic_df['ct_src_dport_ltm'] = None 
-    for line in trafic_df.itertuples(index=True, name='Pandas'): 
-        lastTime = line.LastTime
-        matchinglines = trafic_df[(trafic_df['LastTime'] <= lastTime) & (trafic_df['SrcAddr'] == line.SrcAddr) & (trafic_df['Dport'] == line.Dport)].tail(100) 
+    for line in trafic_df.itertuples(index=True, name='Pandas'):
+        subset =pd.DataFrame(trafic_df.iloc[line.Index-100:line.Index])
+        subset.columns = trafic_df.columns
+        matchinglines = subset[(subset['SrcAddr'] == line.SrcAddr) &  (subset['Dport'] == line.Dport)]
         trafic_df.loc[line.Index, 'ct_src_dport_ltm']=matchinglines.shape[0]
     return  trafic_df
 
@@ -55,8 +56,9 @@ def get_ct_dst_ltm(trafic_df):
     according to the last time (26)."""
     trafic_df['ct_dst_ltm'] = None
     for line in trafic_df.itertuples(index=True, name='Pandas'):
-        lastTime = line.LastTime
-        matchinglines = trafic_df[(trafic_df['LastTime'] <= lastTime) & (trafic_df['DstAddr'] == line.DstAddr)].tail(100) 
+        subset =pd.DataFrame(trafic_df.iloc[line.Index-100:line.Index])
+        subset.columns = trafic_df.columns
+        matchinglines = subset[subset['DstAddr'] == line.DstAddr]
         trafic_df.loc[line.Index, 'ct_dst_ltm']=matchinglines.shape[0]
     return trafic_df
 
@@ -101,10 +103,11 @@ def main():
     os.system(produce_argus_ra_output)
     output_filename = 'output/ArgusFiles/argus_output_features.csv'
     trafic_df = get_argus_output(argus_ra_output_filename)
+    get_ct_dst_ltm(trafic_df)
     get_ct_dst_sport_ltm(trafic_df)
     get_ct_dst_src_ltm(trafic_df)
     get_ct_src_dport_ltm(trafic_df)
-    get_ct_dst_ltm(trafic_df)
+    
     get_ct_state_ttl(trafic_df)
     
     trafic_df = trafic_df.drop(['SrcAddr', 'DstAddr', 'Sport', 'Dport', 'State', 'LastTime'], axis=1)
